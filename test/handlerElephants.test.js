@@ -1,37 +1,52 @@
+const assert = require('assert');
 const handlerElephants = require('../src/handlerElephants');
 
 describe('Testes da função handlerElephants', () => {
-  describe('Valid arguments', () => {
-    it('should return the count of elephants', () => {
+  describe('Argumentos válidos', () => {
+    it('deve retornar a contagem de elefantes', () => {
       const result = handlerElephants('count');
-      expect(result).to.equal(4);
+      assert.strictEqual(result, 4);
     });
 
-    it('should return an array of elephant names including Jefferson', () => {
+    it('deve retornar um array com os nomes dos elefantes, incluindo Jefferson', () => {
       const result = handlerElephants('names');
-      expect(result).to.include('Jefferson');
+      assert.deepStrictEqual(result, ['Jefferson']);
     });
 
-    it('should return an average age close to 10.5', () => {
+    it('deve retornar uma idade média próxima de 10.5', () => {
       const result = handlerElephants('averageAge');
-      expect(result).to.be.closeTo(10.5, 0.1);
+      assert.approximately(result, 10.5, 0.1);
     });
 
-    // Add more tests for other valid arguments as needed
+    // Adicione mais testes para outros argumentos válidos, se necessário
 
-    it('should return the location of the elephants within the Zoo', () => {
+    it('deve retornar a localização dos elefantes no Zoológico', () => {
       const result = handlerElephants('location');
-      expect(result).to.equal('Savannah');
+      assert.strictEqual(result, 'Savannah');
     });
 
-    it('should return the popularity of the elephants', () => {
+    it('deve retornar a popularidade dos elefantes', () => {
       const result = handlerElephants('popularity');
-      expect(result).to.equal('high');
+      assert.strictEqual(result, 'alta');
     });
 
-    it('should return an array of availability days for the elephants', () => {
+    it('deve retornar um array com os dias de disponibilidade dos elefantes', () => {
       const result = handlerElephants('availability');
-      expect(result).to.deep.equal(['Monday', 'Wednesday', 'Friday']);
+      assert.deepStrictEqual(result, ['Segunda-feira', 'Quarta-feira', 'Sexta-feira']);
     });
+  });
+
+  describe('Argumentos inválidos', () => {
+    it('deve retornar undefined quando nenhum argumento for fornecido', () => {
+      const result = handlerElephants();
+      assert.strictEqual(result, undefined);
+    });
+
+    it('deve retornar uma mensagem de erro para tipo de parâmetro inválido', () => {
+      const result = handlerElephants(123);
+      assert.strictEqual(result, 'Parâmetro inválido, é necessário uma string');
+    });
+
+    // Adicione mais testes para outros casos de argumentos inválidos, se necessário
   });
 });
