@@ -1,11 +1,9 @@
-const expect = require('expect');
 const getOpeningHours = require('../src/getOpeningHours');
 
+const zooClosed = 'The zoo is closed';
+const zooOpen = 'The zoo is open';
 describe('getOpeningHours', () => {
-  const zooClosed = 'The zoo is closed';
-  const zooOpen = 'The zoo is open';
-
-  it('deve retornar os horários de funcionamento para cada dia da semana', () => {
+  it('deve retornar os horários de abertura para cada dia da semana', () => {
     const expected = {
       Tuesday: { open: 8, close: 6 },
       Wednesday: { open: 8, close: 6 },
@@ -19,53 +17,59 @@ describe('getOpeningHours', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should return "The zoo is closed" for Monday at 09:00-AM', () => {
+  it('deve retornar "O zoológico está fechado" para Segunda-feira às 09:00-AM', () => {
     const actual = getOpeningHours('Monday', '09:00-AM');
+
     expect(actual).toBe(zooClosed);
   });
 
-  it('should return "The zoo is open" for Tuesday at 09:00-AM', () => {
+  it('deve retornar "O zoológico está aberto" para Terça-feira às 09:00-AM', () => {
     const actual = getOpeningHours('Tuesday', '09:00-AM');
+
     expect(actual).toBe(zooOpen);
   });
 
-  it('should return "The zoo is closed" for Wednesday at 09:00-PM', () => {
+  it('deve retornar "O zoológico está fechado" para Quarta-feira às 09:00-PM', () => {
     const actual = getOpeningHours('Wednesday', '09:00-PM');
+
     expect(actual).toBe(zooClosed);
   });
 
-  it('should return "The zoo is closed" for Sunday at 08:00-PM', () => {
+  it('deve retornar "O zoológico está fechado" para Domingo às 08:00-PM', () => {
     const actual = getOpeningHours('Sunday', '08:00-PM');
+
     expect(actual).toBe(zooClosed);
   });
 
-  it('should return "The zoo is closed" for Friday at 11:00-AM', () => {
+  it('deve retornar "O zoológico está fechado" para Sexta-feira às 11:00-AM', () => {
     const actual = getOpeningHours('Friday', '11:00-AM');
+
     expect(actual).toBe(zooClosed);
   });
 
-  it('should return "The zoo is closed" for Saturday at 07:00-PM', () => {
+  it('deve retornar "O zoológico está fechado" para Sábado às 07:00-PM', () => {
     const actual = getOpeningHours('Saturday', '07:00-PM');
+
     expect(actual).toBe(zooClosed);
   });
 
-  it('should throw an error for an invalid day', () => {
+  it('deve lançar um erro para um dia inválido', () => {
     expect(() => getOpeningHours('InvalidDay', '09:00-AM')).toThrowError('The day must be valid. Example: Monday');
   });
 
-  it('should throw an error for an invalid hour format', () => {
+  it('deve lançar um erro para um formato de hora inválido', () => {
     expect(() => getOpeningHours('Tuesday', '09:00')).toThrowError('The hour should represent a number');
   });
 
-  it('should throw an error for an invalid abbreviation', () => {
+  it('deve lançar um erro para uma abreviação inválida', () => {
     expect(() => getOpeningHours('Tuesday', '09:00-Invalid')).toThrowError('The abbreviation must be \'AM\' or \'PM\'');
   });
 
-  it('should throw an error for an hour outside of the valid range', () => {
+  it('deve lançar um erro para uma hora fora do intervalo válido', () => {
     expect(() => getOpeningHours('Tuesday', '13:00-PM')).toThrowError('The hour must be between 0 and 12');
   });
 
-  it('should throw an error for minutes outside of the valid range', () => {
+  it('deve lançar um erro para minutos fora do intervalo válido', () => {
     expect(() => getOpeningHours('Tuesday', '09:60-AM')).toThrowError('The minutes must be between 0 and 59');
   });
 });
